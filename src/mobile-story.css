@@ -1,0 +1,28 @@
+/* Mobile scroll story: tree is the hero, copy is a lightweight lower-third. */
+@media (max-width:850px){
+  .story{display:block;position:relative;background:radial-gradient(circle at 50% 34%,rgba(93,64,20,.20),transparent 38%),#0c1012}
+  .tree-stage{height:calc(100svh - 64px);top:64px;z-index:2;background:#0c1012;perspective:900px;overflow:hidden}
+  .tree-visual{height:100%;justify-content:flex-start;padding-top:4svh}
+  .tree-stage .tree{height:64svh;width:auto;max-width:94vw;opacity:1;filter:drop-shadow(0 0 12px rgba(242,197,82,.24))}
+  .tree-stage:before{width:110vw;height:110vw;top:8svh;opacity:.65}
+  .tree-depth-back{opacity:.52;transform:translate(5px,3px)}
+  .tree-lines{filter:drop-shadow(0 0 6px rgba(242,197,82,.62))}
+  .nodes{filter:drop-shadow(0 0 8px rgba(242,197,82,.8))}
+  .tree-caption{top:1.5svh;font-size:8px;color:#8b826e;letter-spacing:.17em}
+  .tree-finale{bottom:18svh;pointer-events:none}
+  .tree-finale strong{font-size:28px}
+  .story-content{position:relative;z-index:3;padding:0 18px 0;margin-top:calc(-100svh + 64px);pointer-events:none}
+  .story-card{height:100svh;min-height:100svh;margin:0;padding:0 4px 8svh;border:0;border-radius:0;background:transparent;box-shadow:none;display:flex;justify-content:flex-end;align-items:stretch}
+  .story-card>*{max-width:100%}
+  .story-card .num{font-size:10px;color:#d9ae45;margin-bottom:5px}
+  .story-card>svg{width:18px;height:18px;margin:0 0 7px;color:#f1c453}
+  .story-card>span{font-size:9px;letter-spacing:.16em;margin-bottom:5px}
+  .story-card h3{font-size:25px;line-height:1.05;margin:0 0 7px;text-shadow:0 2px 18px #000}
+  .story-card p{font-size:13px;line-height:1.45;color:#b8b5ad;margin:0;max-width:430px;text-shadow:0 2px 16px #000}
+  .story-card .checks{display:none}
+  .story-card:after{content:'';position:absolute;left:0;right:0;height:32svh;bottom:0;background:linear-gradient(180deg,transparent,rgba(8,10,11,.78) 34%,#080a0b 100%);z-index:-1;pointer-events:none}
+  .story-card.finale{background:transparent;border:0}
+  .story-card.finale h3{font-size:29px;color:#f6f2e8}
+  .story-card.finale p{max-width:420px}
+  .trust{position:relative;z-index:5}
+}
