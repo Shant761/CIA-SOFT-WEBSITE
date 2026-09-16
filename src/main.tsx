@@ -4,6 +4,7 @@ import {App} from './App';
 import {ClientsSection} from './ClientsSection';
 import {ServicesDetail,ContactForm} from './CommercialSections';
 import './styles.css';
+import './commercial.css';
 import './mobile-story.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
