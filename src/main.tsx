@@ -9,14 +9,42 @@ import './mobile-story.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
 
+let layoutRefreshScheduled=false;
+function refreshScrollLayout(){
+  if(layoutRefreshScheduled)return;
+  layoutRefreshScheduled=true;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    layoutRefreshScheduled=false;
+    window.dispatchEvent(new Event('resize'));
+  }));
+}
+
 function mountCommercial(){
   const solutions=document.querySelector('.solutions');
   if(!solutions)return false;
-  if(!document.getElementById('services-detail-root')){const host=document.createElement('div');host.id='services-detail-root';solutions.insertAdjacentElement('afterend',host);ReactDOM.createRoot(host).render(<React.StrictMode><ServicesDetail/></React.StrictMode>)}
+  let changed=false;
+  if(!document.getElementById('services-detail-root')){
+    const host=document.createElement('div');host.id='services-detail-root';solutions.insertAdjacentElement('afterend',host);
+    ReactDOM.createRoot(host).render(<React.StrictMode><ServicesDetail/></React.StrictMode>);changed=true;
+  }
   const servicesHost=document.getElementById('services-detail-root');
-  if(servicesHost&&!document.getElementById('clients-root')){const host=document.createElement('div');host.id='clients-root';servicesHost.insertAdjacentElement('afterend',host);ReactDOM.createRoot(host).render(<React.StrictMode><ClientsSection/></React.StrictMode>)}
+  if(servicesHost&&!document.getElementById('clients-root')){
+    const host=document.createElement('div');host.id='clients-root';servicesHost.insertAdjacentElement('afterend',host);
+    ReactDOM.createRoot(host).render(<React.StrictMode><ClientsSection/></React.StrictMode>);changed=true;
+  }
   const contactBox=document.querySelector('.contact-box');
-  if(contactBox&&!document.getElementById('contact-form-root')){contactBox.innerHTML='';const host=document.createElement('div');host.id='contact-form-root';contactBox.appendChild(host);ReactDOM.createRoot(host).render(<React.StrictMode><ContactForm/></React.StrictMode>)}
+  if(contactBox&&!document.getElementById('contact-form-root')){
+    contactBox.innerHTML='';const host=document.createElement('div');host.id='contact-form-root';contactBox.appendChild(host);
+    ReactDOM.createRoot(host).render(<React.StrictMode><ContactForm/></React.StrictMode>);changed=true;
+  }
+  if(changed){
+    refreshScrollLayout();
+    setTimeout(refreshScrollLayout,120);
+    setTimeout(refreshScrollLayout,500);
+  }
   return !!document.getElementById('clients-root')&&!!document.getElementById('contact-form-root');
 }
-if(!mountCommercial()){const observer=new MutationObserver(()=>{if(mountCommercial())observer.disconnect()});observer.observe(document.getElementById('root')!,{childList:true,subtree:true})}
+if(!mountCommercial()){
+  const observer=new MutationObserver(()=>{if(mountCommercial())observer.disconnect()});
+  observer.observe(document.getElementById('root')!,{childList:true,subtree:true});
+}
