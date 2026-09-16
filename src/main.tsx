@@ -5,7 +5,6 @@ import {ClientsSection} from './ClientsSection';
 import {ServicesDetail,ContactForm} from './CommercialSections';
 import './styles.css';
 import './commercial.css';
-import './mobile-story.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);
 
@@ -48,3 +47,12 @@ if(!mountCommercial()){
   const observer=new MutationObserver(()=>{if(mountCommercial())observer.disconnect()});
   observer.observe(document.getElementById('root')!,{childList:true,subtree:true});
 }
+
+// Mobile browser chrome changes the visual viewport while scrolling. Refresh only
+// after a meaningful width/orientation change so CIA FLOW does not jump mid-scroll.
+let stableWidth=window.innerWidth;
+window.addEventListener('orientationchange',()=>setTimeout(refreshScrollLayout,180),{passive:true});
+window.addEventListener('resize',()=>{
+  const nextWidth=window.innerWidth;
+  if(Math.abs(nextWidth-stableWidth)>40){stableWidth=nextWidth;setTimeout(refreshScrollLayout,80)}
+},{passive:true});
