@@ -21,6 +21,15 @@ function refreshScrollLayout(){
   }));
 }
 
+function refreshAfterIntro(){
+  refreshScrollLayout();
+  const hash=window.location.hash;
+  if(hash){
+    const target=document.querySelector(hash);
+    if(target) requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+  }
+}
+
 function mountCommercial(){
   const solutions=document.querySelector('.solutions');
   if(!solutions)return false;
@@ -46,9 +55,30 @@ if(!mountCommercial()){
   const observer=new MutationObserver(()=>{if(mountCommercial())observer.disconnect()});
   observer.observe(document.getElementById('root')!,{childList:true,subtree:true});
 }
+
+// Intro locks scrolling for ~6.2s. Recalculate all scroll geometry only after it is gone.
+setTimeout(refreshAfterIntro,6350);
+window.addEventListener('load',()=>{setTimeout(refreshScrollLayout,120);setTimeout(refreshScrollLayout,900)},{once:true});
+
+document.addEventListener('click',event=>{
+  const link=(event.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+  if(!link)return;
+  const target=document.querySelector(link.getAttribute('href')!);
+  if(!target)return;
+  event.preventDefault();
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
 let stableWidth=window.innerWidth;
-window.addEventListener('orientationchange',()=>setTimeout(refreshScrollLayout,220),{passive:true});
+let stableHeight=window.innerHeight;
+window.addEventListener('orientationchange',()=>setTimeout(refreshScrollLayout,260),{passive:true});
 window.addEventListener('resize',()=>{
-  const nextWidth=window.innerWidth;
-  if(Math.abs(nextWidth-stableWidth)>40){stableWidth=nextWidth;setTimeout(refreshScrollLayout,100)}
+  const nextWidth=window.innerWidth,nextHeight=window.innerHeight;
+  const desktop=nextWidth>=768;
+  const widthChanged=Math.abs(nextWidth-stableWidth)>24;
+  const heightChanged=Math.abs(nextHeight-stableHeight)>80;
+  if(widthChanged||(desktop&&heightChanged)){
+    stableWidth=nextWidth;stableHeight=nextHeight;
+    setTimeout(refreshScrollLayout,120);
+  }
 },{passive:true});
