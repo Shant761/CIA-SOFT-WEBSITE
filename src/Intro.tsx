@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react';
 import './intro.css';
 
-const nodes=['POS','HDM','QR','PRINT','MOBILE','MENU'];
+const particles=Array.from({length:14},(_,i)=>i);
 export function Intro(){
   const [done,setDone]=useState(false);
   useEffect(()=>{
@@ -9,17 +9,14 @@ export function Intro(){
     const timer=window.setTimeout(()=>{
       setDone(true);
       document.documentElement.classList.remove('intro-active');
-    },2100);
+    },5200);
     return()=>{window.clearTimeout(timer);document.documentElement.classList.remove('intro-active')};
   },[]);
   if(done)return null;
-  return <div className="site-intro boot-intro" aria-hidden="true">
-    <div className="boot-network">
-      <div className="boot-rail"/>
-      {nodes.map((n,i)=><div className={`boot-node boot-node-${i+1}`} key={n}><i/><span>{n}</span></div>)}
-      <div className="boot-pulse"/>
-    </div>
-    <div className="intro-brand boot-brand"><strong>CIA SOFT</strong><span>PEOPLE · IDEAS · SOLUTIONS</span></div>
-    <div className="intro-status"><i/> SYSTEM CONNECTED</div>
+  return <div className="site-intro seed-intro" aria-hidden="true">
+    <div className="seed-fall"><span className="seed-core"/></div>
+    <div className="seed-impact"/>
+    <div className="seed-particles">{particles.map(i=><i key={i} style={{'--i':i} as React.CSSProperties}/>)}</div>
+    <div className="welcome-copy"><span>WELCOME</span><strong>CIA SOFT</strong><small>PEOPLE · IDEAS · SOLUTIONS</small></div>
   </div>
 }
