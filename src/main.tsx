@@ -8,6 +8,7 @@ import {ServicesDetail,ContactForm} from './CommercialSections';
 import './styles.css';
 import './commercial.css';
 import './clients-images.css';
+import './flow-fix.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><><Intro/><App/></></React.StrictMode>);
 
@@ -56,7 +57,6 @@ if(!mountCommercial()){
   observer.observe(document.getElementById('root')!,{childList:true,subtree:true});
 }
 
-// Intro locks scrolling for ~6.2s. Recalculate all scroll geometry only after it is gone.
 setTimeout(refreshAfterIntro,6350);
 window.addEventListener('load',()=>{setTimeout(refreshScrollLayout,120);setTimeout(refreshScrollLayout,900)},{once:true});
 
