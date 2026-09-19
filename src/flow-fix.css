@@ -1,21 +1,23 @@
-/* CIA FLOW geometry pass: keep the visual rail and cards on the exact path used by App.tsx.
-   JS moves the drop from 14% to 86% and activates at travel 1/6..5/6. */
-.growth-rail{height:100%!important;background:transparent!important;pointer-events:none}
-.growth-rail::before{content:'';position:absolute;left:0;top:0;width:1px;height:72%;background:#6d54241d}
-.growth-rail-fill{max-height:72%!important}
-/* Card centres match the five activation points of the drop: 26,38,50,62,74%. */
-.growth-card:nth-child(1){top:calc(74% - clamp(105px,12.5svh,145px)/2)!important}
-.growth-card:nth-child(2){top:calc(62% - clamp(105px,12.5svh,145px)/2)!important}
+/* CIA FLOW 1.0 — one coordinate system. JS owns drop position and card activation. */
+.growth-rail{top:14%!important;height:72%!important;z-index:2!important;background:#6d54241d!important;pointer-events:none}
+.growth-rail::before{content:none!important}
+.growth-rail-fill{top:0!important;height:0;max-height:none!important;background:#e9bd47!important;box-shadow:0 0 10px #dcae3540}
+.growth-drop{top:14%;z-index:8!important}
+.growth-stack{z-index:3!important}
+.growth-card{height:clamp(105px,12.5svh,145px);isolation:isolate}
+/* centres: 26 / 38 / 50 / 62 / 74 — same checkpoints used by App.tsx */
+.growth-card:nth-child(1){top:calc(26% - clamp(105px,12.5svh,145px)/2)!important}
+.growth-card:nth-child(2){top:calc(38% - clamp(105px,12.5svh,145px)/2)!important}
 .growth-card:nth-child(3){top:calc(50% - clamp(105px,12.5svh,145px)/2)!important}
-.growth-card:nth-child(4){top:calc(38% - clamp(105px,12.5svh,145px)/2)!important}
-.growth-card:nth-child(5){top:calc(26% - clamp(105px,12.5svh,145px)/2)!important}
-/* Make the connector visible through the cards without covering copy. */
-.growth-rail{z-index:6!important}.growth-drop{z-index:9!important}.growth-stack{z-index:3!important}.growth-card{isolation:isolate}.growth-card::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(232,189,75,calc(.05 + var(--active)*.28));pointer-events:none;z-index:0}.growth-photo,.growth-copy,.activation-line{position:relative;z-index:1}
+.growth-card:nth-child(4){top:calc(62% - clamp(105px,12.5svh,145px)/2)!important}
+.growth-card:nth-child(5){top:calc(74% - clamp(105px,12.5svh,145px)/2)!important}
+.growth-card::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(232,189,75,calc(.04 + var(--active)*.24));pointer-events:none;z-index:0}
+.growth-photo,.growth-copy,.activation-line{position:relative;z-index:1}
 @media(max-width:767px){
-  /* Mobile cards are 12svh; keep their centres on the same five physical checkpoints. */
-  .growth-card:nth-child(1){top:calc(74% - 6svh)!important}
-  .growth-card:nth-child(2){top:calc(62% - 6svh)!important}
-  .growth-card:nth-child(3){top:calc(50% - 6svh)!important}
-  .growth-card:nth-child(4){top:calc(38% - 6svh)!important}
-  .growth-card:nth-child(5){top:calc(26% - 6svh)!important}
+ .growth-card{height:12svh;min-height:92px}
+ .growth-card:nth-child(1){top:calc(26% - 6svh)!important}
+ .growth-card:nth-child(2){top:calc(38% - 6svh)!important}
+ .growth-card:nth-child(3){top:calc(50% - 6svh)!important}
+ .growth-card:nth-child(4){top:calc(62% - 6svh)!important}
+ .growth-card:nth-child(5){top:calc(74% - 6svh)!important}
 }
