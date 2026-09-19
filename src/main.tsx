@@ -5,6 +5,7 @@ import {App} from './App';
 import {Intro} from './Intro';
 import {ClientsSection} from './ClientsSection';
 import {ServicesDetail,ContactForm} from './CommercialSections';
+import ShowcaseV2 from './ShowcaseV2';
 import './styles.css';
 import './commercial.css';
 import './clients-images.css';
@@ -20,6 +21,24 @@ function refreshScrollLayout(){
     layoutRefreshScheduled=false;
     ScrollTrigger.refresh(true);
   }));
+}
+
+function mountShowcaseV2(){
+  const oldIntro=document.querySelector<HTMLElement>('.story-intro');
+  const oldFlow=document.querySelector<HTMLElement>('.growth-story');
+  const trust=document.querySelector<HTMLElement>('.trust');
+  if(!trust)return false;
+  oldIntro?.setAttribute('data-v2-hidden','true');
+  oldFlow?.setAttribute('data-v2-hidden','true');
+  if(!document.getElementById('showcase-v2-root')){
+    const host=document.createElement('div');
+    host.id='showcase-v2-root';
+    trust.parentElement?.insertBefore(host,trust);
+    ReactDOM.createRoot(host).render(<React.StrictMode><ShowcaseV2/></React.StrictMode>);
+    refreshScrollLayout();
+    setTimeout(refreshScrollLayout,250);
+  }
+  return true;
 }
 
 function refreshAfterIntro(){
@@ -52,8 +71,14 @@ function mountCommercial(){
   if(changed){refreshScrollLayout();setTimeout(refreshScrollLayout,160);setTimeout(refreshScrollLayout,700)}
   return !!document.getElementById('clients-root')&&!!document.getElementById('contact-form-root');
 }
-if(!mountCommercial()){
-  const observer=new MutationObserver(()=>{if(mountCommercial())observer.disconnect()});
+
+function mountPreviewEnhancements(){
+  const commercialReady=mountCommercial();
+  const showcaseReady=mountShowcaseV2();
+  return commercialReady&&showcaseReady;
+}
+if(!mountPreviewEnhancements()){
+  const observer=new MutationObserver(()=>{if(mountPreviewEnhancements())observer.disconnect()});
   observer.observe(document.getElementById('root')!,{childList:true,subtree:true});
 }
 
