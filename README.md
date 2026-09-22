@@ -1,24 +1,12 @@
-# CIA SOFT Website v0.1
+# CIA SOFT WEBSITE
 
-Premium black/gold landing page for CIA SOFT built with Vite, React, TypeScript and GSAP.
+Official CIA SOFT marketing website.
 
-## Core concept
-The page tells the CIA SOFT story through a scroll-driven digital tree: foundation → restaurants → retail → integrations → support/growth → ecosystem.
+## Direction
+Premium dark / near-black + gold, minimal technology-first presentation, mobile-first responsive layout.
 
-## Run
-```bash
-npm install
-npm run dev
-```
+## Approved intro
+Drop/seed moves top-to-bottom, activates blocks sequentially, then the tree grows and reveals CIA SOFT.
 
-## Build
-```bash
-npm run build
-```
-
-### Next
-- Replace the temporary SVG tree with the exact vectorized CIA SOFT logo.
-- Add real product screenshots and photography.
-- HY/RU/EN localization.
-- Connect lead form.
-- SEO/local search pages and analytics.
+## Core message
+CIA SOFT builds practical POS and automation solutions for businesses in Armenia: Poster POS integrations, HDM fiscalization, Mobile Waiter, Smart Menu, IDRAM QR and CIA POS Lite.
